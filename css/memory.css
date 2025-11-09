@@ -1,0 +1,170 @@
+/* ============ Base reset & tokens ============ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --page-max: 960px;          /* content max width on large screens */
+  --gap-sm: 8px;
+  --gap-md: 12px;
+  --gap-lg: 16px;
+  --card-min: 80px;           /* minimum card width in grid */
+  --card-ratio: 4 / 5;        /* keeps card shape consistent */
+  --tab-pad: 12px 14px;
+}
+
+/* ============ Page shell ============ */
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 100%;
+  background-color: #fff;
+
+  /* Replace fixed width + border with fluid layout */
+  margin: 0 auto;
+  padding: var(--gap-lg);
+  max-width: var(--page-max);
+}
+
+/* Contain the app in a soft card on larger screens */
+@media (min-width: 700px) {
+  body {
+    border: 1px solid #000;
+    border-radius: 1em;
+    margin: 1em auto;
+    padding: 0 2em 2em 2em;
+  }
+}
+
+h1 {
+  font-size: 1.6rem; /* 150% → relative size */
+  color: cornflowerblue;
+  margin: 0 0 0.5em 0;
+}
+
+/* ============ Header: convert floats to flex ============ */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-lg);
+}
+
+header p {
+  margin: 0; /* remove extra spacing; flex gap handles spacing */
+}
+
+#new_game a {
+  text-decoration: none;
+}
+
+/* Remove float-based layout entirely */
+#new_game, #player, #high_score, #correct {}
+
+/* ============ Tabs ============ */
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Make tabs touch-friendly */
+.tabs button {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: var(--tab-pad);
+  transition: 0.3s;
+  flex: 1 1 auto;              /* allow wrapping on small screens */
+  min-width: 120px;            /* ensures tappable width */
+}
+
+.tabs button:hover { background-color: #ddd; }
+.tabs button.active { background-color: #ccc; }
+
+/* Tab content container */
+.tabcontent {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+/* Hide utility */
+.hide { display: none; }
+
+/* ============ Cards grid (mobile-first) ============ */
+#cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--card-min), 1fr));
+  gap: var(--gap-sm);
+  align-items: start;
+}
+
+/* Replace fixed px card sizes with fluid, ratio-locked tiles */
+#cards img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--card-ratio); /* keeps consistent shape */
+  object-fit: cover;
+  display: block;
+  /* Remove old paddings/floats */
+  padding: 0;
+}
+
+/* ============ Forms ============ */
+label {
+  display: inline-block;
+  width: 10em;
+}
+
+input,
+select {
+  width: 100%;
+  max-width: 14em; /* allow to grow a bit on wider screens */
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+
+input[type='checkbox'] { width: 2em; }
+
+/* ============ Responsive tweaks ============ */
+
+/* Small phones: tighten spacing, stack tabs */
+@media (max-width: 400px) {
+  h1 { font-size: 1.3rem; }
+  .tabs button { min-width: 100px; padding: 10px 12px; }
+  :root { --card-min: 72px; }
+}
+
+/* Tablets: increase card size and spacing */
+@media (min-width: 600px) {
+  :root { --card-min: 90px; --gap-md: 14px; --gap-lg: 18px; }
+}
+
+/* Larger tablets / small laptops */
+@media (min-width: 900px) {
+  :root { --card-min: 100px; }
+}
+
+/* Desktops: comfortable grid and page max width */
+@media (min-width: 1200px) {
+  :root { --page-max: 1080px; --card-min: 110px; }
+}
+
+/* Optional: make header stats group nicely on small screens */
+@media (max-width: 600px) {
+  header {
+    gap: var(--gap-sm);
+  }
+  #new_game, #player, #high_score, #correct {
+    flex: 1 1 45%;
+  }
+}
+
+/* Preserve existing helper */
+.clear { clear: both; }
