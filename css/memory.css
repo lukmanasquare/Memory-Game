@@ -114,12 +114,15 @@ header p {
 }
 
 .profile{
-    margin-left: 30px;
+    margin-left: 5%;
     margin-top: 20px;
+	text-align: left;
+	
 }
 
 .profile h3{
     margin-top: 10px;
+	text-align: center;
 }
 
 
@@ -235,6 +238,17 @@ footer{
   
   /* Utility */
   .clear { clear: both; }   /* keep for legacy, not needed with grid/flex */
+
+/* Larger input boxes for mobile */
+input[type="text"],
+select,
+input[type="button"] {
+  font-size: 1rem;        /* increase text size */
+  padding: 10px 12px;     /* taller boxes */
+  height: 45px;           /* consistent height */
+  border-radius: 6px;     /* smoother corners */
+  box-sizing: border-box;
+}
 
 }
 
