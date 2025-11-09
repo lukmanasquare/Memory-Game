@@ -163,6 +163,7 @@ const CARD_FRONT_IMAGES = [
     const clearDiv = document.createElement('div')
     clearDiv.className = 'clear'
     board.appendChild(clearDiv)
+    fixResponsiveGrid()
   }
 
   // -------- Click logic
@@ -269,6 +270,8 @@ const CARD_FRONT_IMAGES = [
       localStorage.setItem(STORAGE_CARD_COUNT_KEY, String(cardInput))
       window.location.reload()
     })
+
+    fixResponsiveGrid()
   }
 
   // -------- Start a New game
@@ -277,6 +280,7 @@ const CARD_FRONT_IMAGES = [
       event.preventDefault()
       window.location.reload()
     })
+    fixResponsiveGrid()
   }
 
   // -------- App init
@@ -290,4 +294,30 @@ const CARD_FRONT_IMAGES = [
     const deck = createShuffledDeck()
     renderGameBoard(deck)
   })
+
+  // ---------------- Responsive Grid Fix ----------------
+  function fixResponsiveGrid() {
+    const cardsContainer = document.getElementById('cards')
+    if (!cardsContainer) return
+
+    // Remove fixed inline styles
+    cardsContainer.style.width = '100%'
+    cardsContainer.style.height = 'auto'
+
+    // Count cards currently displayed
+    const totalCards = cardsContainer.querySelectorAll('img').length
+    let columns
+
+    if (window.innerWidth <= 768) {
+      columns = 4 // lock to 4 columns on phones/tablets
+    } else {
+      columns = Math.ceil(Math.sqrt(totalCards)) // roughly square grid
+    }
+
+    // Apply grid styling dynamically
+    cardsContainer.style.display = 'grid'
+    cardsContainer.style.gridTemplateColumns = `repeat(${columns}, 1fr)`
+    cardsContainer.style.gridAutoFlow = 'row dense'
+    cardsContainer.style.gap = '8px'
+  }
 })()
